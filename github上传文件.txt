@@ -1,0 +1,41 @@
+github上传文件注意点
+1.在配置好与远程仓库后(建议用SSH的方式，它的速度是最快的)，具体操作如下：
+1.1 本地配置ssh
+cd ~/.ssh
+如果没有该目录就先创建
+mkdir ~/.ssh
+
+然后创建ssh文件
+ssh-keygen -t rsa -C "your_email@youremail.com"
+然后是设置用户密码，嫌麻烦可以一路Enter
+
+1.2 github添加ssh
+在github的setting里的SSH and GPG keys增加ssh。
+title随便输入，Key复制本地~/.ssh目录下的id_rsa.pub文件内的内容。可以用命令获取：
+cat ~/.ssh/id_rsa.pub
+
+创建成功的话我们就把本地的ssh和git的ssh连接上了。
+这个操作一台电脑只要做一次就可以了，之后就不需要重复了。
+
+*2.本地初始化并连接到远程仓库
+进入本地仓库所在目录
+本地初始化：
+git init
+
+连接远程仓库：
+git remote add origin git@github.com:username/proname.git
+或者
+git remote add origin https://github.com/username/proname.git
+两个都可以。username是你的github用户名，proname是该项目的名称。注意加.git尾缀。
+这个操作一个本地仓库只要做一次就可以了，之后不需重复，除非更改远程仓库地址。
+
+3.将本地和远程仓库同步
+git add -A
+git commit -m "first"
+git push -u origin master
+以后要同步也是输入这三句就可以。
+
+如果远程仓库和本地冲突将会报错
+这时加上-f参数强制覆盖（不太建议用这个）
+git push -u origin master -f
+
